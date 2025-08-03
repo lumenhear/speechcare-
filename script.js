@@ -152,6 +152,4 @@
             el.classList.add('animate-on-scroll');
             observer.observe(el);
         });
-    </script>
-</body>
-</html>
+  
