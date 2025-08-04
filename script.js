@@ -42,25 +42,103 @@ function handleUserMessage() {
         userInput.value = '';
         
         // Simulate AI response
-        setTimeout(() => {
-            let response;
-            
-            if (message.toLowerCase().includes('appointment') || message.toLowerCase().includes('book')) {
-                response = "To book an appointment, you can call us at +91 93501 58754, WhatsApp us, or fill out the form on our website. Would you like me to direct you to our booking page?";
-            } else if (message.toLowerCase().includes('service') || message.toLowerCase().includes('test')) {
-                response = "We offer a range of services including hearing tests, speech therapy, hearing aids, and child development programs. You can view all our services on our website. Would you like me to send you more information about a specific service?";
-            } else if (message.toLowerCase().includes('location') || message.toLowerCase().includes('address')) {
-                response = "Our clinic is located in Hisar, Haryana. You can find our exact location on the map in the 'Locations' section of our website. Would you like directions?";
-            } else if (message.toLowerCase().includes('hours') || message.toLowerCase().includes('time')) {
-                response = "We're open Monday to Saturday from 10:00 AM to 6:00 PM. We're closed on Sundays and public holidays.";
-            } else if (message.toLowerCase().includes('cost') || message.toLowerCase().includes('price')) {
-                response = "The cost of our services varies depending on the specific treatment or device. We offer free initial consultations and EMI options for hearing aids. Would you like to schedule a consultation to discuss pricing?";
-            } else {
-                response = "Thank you for your message! Our team will get back to you shortly. In the meantime, is there anything specific you'd like to know about our services?";
-            }
-            
-            addMessage(response);
-        }, 1000);
+setTimeout(() => {
+    let response;
+    const userMessage = message.toLowerCase();
+
+    // 🗓️ Appointment / Booking
+    if (userMessage.includes('appointment') || userMessage.includes('book') || userMessage.includes('schedule') || userMessage.includes('consultation')) {
+        response = "Yes! You can book an appointment by calling us at +91 93501 58754, WhatsApp us, or filling the form on our website. Would you like the link to our booking page?";
+    }
+
+    // 🧪 Services / Tests
+    else if (userMessage.includes('service') || userMessage.includes('test') || userMessage.includes('therapy')) {
+        response = "We provide hearing tests, speech therapy, hearing aid fitting, child development programs, and more. Would you like details on a specific service?";
+    }
+    else if (userMessage.includes('speech therapy') && (userMessage.includes('kid') || userMessage.includes('child'))) {
+        response = "Yes! We specialize in child speech therapy for delayed speech, stammering, autism, and more. How old is your child?";
+    }
+    else if (userMessage.includes('test') && (userMessage.includes('hearing') || userMessage.includes('audiometry'))) {
+        response = "We offer PTA, impedance audiometry, BERA, OAE, and other hearing assessments. We also do speech and language evaluations.";
+    }
+
+    // 📍 Location / Directions
+    else if (userMessage.includes('location') || userMessage.includes('address') || userMessage.includes('where')) {
+        response = "Our main clinic is in Hisar, Haryana. You can view our location on Google Maps. Want directions now?";
+    }
+    else if (userMessage.includes('branch') || userMessage.includes('another clinic')) {
+        response = "Yes, we also have branches in nearby areas. Would you like to know the closest one to your location?";
+    }
+
+    // 🕐 Clinic Timings
+    else if (userMessage.includes('time') || userMessage.includes('hour') || userMessage.includes('open') || userMessage.includes('close')) {
+        response = "We're open Monday to Saturday, from 10:00 AM to 6:00 PM. We're closed on Sundays and public holidays.";
+    }
+
+    // 💰 Fees / Cost / Payment
+    else if (userMessage.includes('cost') || userMessage.includes('price') || userMessage.includes('fee') || userMessage.includes('charge')) {
+        response = "Hearing tests start at very affordable rates. The first consultation is free. Would you like to book a test?";
+    }
+    else if (userMessage.includes('emi') || userMessage.includes('installment')) {
+        response = "Yes, we offer EMI and installment options on most hearing aids. Want help checking eligibility?";
+    }
+    else if (userMessage.includes('insurance') || userMessage.includes('claim')) {
+        response = "Some private insurance providers may reimburse hearing devices. We’ll help you with documents if needed.";
+    }
+
+    // 🧠 Symptoms / Concerns
+    else if (userMessage.includes('hearing loss') || userMessage.includes('not hearing') || userMessage.includes('ear problem')) {
+        response = "That could be a sign of hearing loss. We recommend a quick screening test. Would you like to book one?";
+    }
+    else if (userMessage.includes('child not speaking') || userMessage.includes('speech delay')) {
+        response = "There could be several causes. A speech and hearing evaluation is the first step. We can help you schedule it.";
+    }
+    else if (userMessage.includes('hears but doesn’t understand') || userMessage.includes('speech discrimination')) {
+        response = "That’s a common symptom of speech discrimination issues. We recommend a hearing evaluation.";
+    }
+
+    // 👂 Hearing Aids
+    else if (userMessage.includes('hearing aid') || userMessage.includes('device')) {
+        response = "Yes! We offer the latest digital hearing aids with free trials and fitting. Would you like to try one?";
+    }
+    else if (userMessage.includes('price range') && (userMessage.includes('hearing aid') || userMessage.includes('device'))) {
+        response = "Prices vary based on brand and features. We have models starting from ₹10,000 with EMI options.";
+    }
+
+    // 🏠 Home Visits / Online Support
+    else if (userMessage.includes('home visit') || userMessage.includes('visit at home')) {
+        response = "Yes, we offer limited home visits within Hisar city. Would you like to request one?";
+    }
+    else if (userMessage.includes('online therapy') || userMessage.includes('video consultation')) {
+        response = "Yes, we offer video-based speech therapy and consultations. Want to book a session?";
+    }
+
+    // 📄 Reports / Results
+    else if (userMessage.includes('report') || userMessage.includes('result')) {
+        response = "Most reports are ready within 24 hours. You can collect them from the clinic or we’ll send them via WhatsApp.";
+    }
+    else if (userMessage.includes('online report') || userMessage.includes('get report')) {
+        response = "Absolutely! Just confirm your name and test date, and we’ll send it to you.";
+    }
+
+    // 🔁 Follow-up / Existing Patient
+    else if (userMessage.includes('follow-up') || userMessage.includes('next session')) {
+        response = "Of course! Please share your name and last appointment date. We’ll schedule a follow-up for you.";
+    }
+    else if (userMessage.includes('repeat test') || userMessage.includes('test again')) {
+        response = "It depends on the time since your last visit. If it's over 6 months, a new test may be helpful. Want me to check?";
+    }
+
+    // ℹ️ Other / Default
+    else if (userMessage.includes('hello') || userMessage.includes('hi') || userMessage.includes('help')) {
+        response = "Hello! I’m your assistant from LUMEN Hearing and Speech Clinic. How can I help you today?";
+    }
+    else {
+        response = "Thanks for reaching out! Can you please tell me more about your concern so I can assist you better?";
+    }
+
+    addMessage(response);
+}, 1000);
     }
 }
 
